@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Try 「{{codeTitle}}」 | Cotpear Coding</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+		 crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
+		<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
+	</head>
+	<body>
+		<div class="container-fluid" id="app">
+			<h1 class="text text-primary">執行 Javascript</h1>
+			<h5 class="text text-dark">{{codeTitle}}</h5>
+			<hr>
+			<pre onclick="$('#code').show();$('#LineBreak_ajdl235').show();$(this).hide();"><code class="language-javascript">{{code}}</code></pre>
+			<textarea id="code" style="display:none;" class="form-control" placeholder="Javascript代碼" class="language-javascript"
+			 v-model="code">{{code}}</textarea>
+			<br id="LineBreak_ajdl235" style="display: none;">
+			<button class="btn btn-success" @click="runCode()">Run Code</button>
+			<hr>
+			<h1 class="text text-primary">控制台訊息</h1>
+			<div class="container-fluid">
+				<div class="card" style="width: 18rem;">
+					<div class="card-header">
+						Console logs
+					</div>
+					<ul class="list-group list-group-flush">
+						<template v-for="V in consoleMessage">
+							<li :class="['list-group-item-'+V.style,'list-group-item']" style="line-height: 15px;">
+								{{V.msg}}<br>
+								<small class="text-muted">{{V.time}}</small>
+							</li>
+
+						</template>
+					</ul>
+				</div>
+				<br>
+			</div>
+
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+		 crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+		 crossorigin="anonymous"></script>
+		<script>
+			hljs.initHighlightingOnLoad()
+		</script>
+		<script>
+			var vm = new Vue({
+				el: "#app",
+				data: (function() {
+					return {
+						"code": `console.log(1)`,
+						"codeTitle": "",
+						"consoleMessage": []
+					}
+				})(),
+				methods: (function() {
+					return {
+						runCode: () => {
+							try {
+								window.eval(this.code.value)
+							} catch (err) {
+								vm.consoleMessage.push({
+									msg: err.toString(),
+									time: new Intl.DateTimeFormat('zh-TW', {
+										dateStyle: "long",
+										timeStyle: "medium"
+									}).format(new Date()),
+									style: "danger"
+								})
+							}
+
+						}
+					}
+				})(),
+				watch: (function() {
+					return {
+						codeTitle: function(val) {
+							if (val != "") {
+								document.title = document.title.replace("{{codeTitle}}", val)
+							}
+							return val;
+						},
+						code: function(val) {
+							var _v;
+							_v = val.replace(/document\.cookie\ *=/g, "")
+							_v = val.replace(/document\.cookie/g, '""')
+							this.code = _v
+						}
+					}
+				})()
+			});
+			(function() {
+				var oldLog = console.log;
+				console.log = function(message) {
+					vm.consoleMessage.push({
+						msg: message,
+						time: new Intl.DateTimeFormat('zh-TW', {
+							dateStyle: "long",
+							timeStyle: "medium"
+						}).format(new Date()),
+						style: "info"
+					})
+					oldLog.apply(console, arguments);
+				};
+				window.addEventListener("error", (val) => {
+					vm.consoleMessage.push({
+						msg: val,
+						time: new Intl.DateTimeFormat('zh-TW', {
+							dateStyle: "long",
+							timeStyle: "medium"
+						}).format(new Date()),
+						style: "danger"
+					})
+				})
+				var oldWarn = console.warn;
+				console.warn = function(message) {
+					vm.consoleMessage.push({
+						msg: message,
+						time: new Intl.DateTimeFormat('zh-TW', {
+							dateStyle: "long",
+							timeStyle: "medium"
+						}).format(new Date()),
+						style: "warning"
+					})
+					oldWarn.apply(console, arguments);
+				};
+			})();
+			setTimeout(() => {
+				vm.codeTitle = "Alert視窗"
+			}, 1000)
+		</script>
+	</body>
+</html>
