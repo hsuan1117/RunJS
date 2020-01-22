@@ -167,7 +167,9 @@
 					oldWarn.apply(console, arguments);
 				};
 			})();
-			
+			window.setTimeout(()=>{
+				hljs.highlightBlock(document.querySelector(".language-javascript"))
+			},1500)
 		</script>
 	</body>
 </html>
