@@ -69,6 +69,7 @@
 									if (JSON.parse(localStorage.getItem('RunJS_dataSource')) && JSON.parse(localStorage.getItem('RunJS_dataSource')).hasOwnProperty(param.get("codeID"))) {
 										this.code = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][0]
 										this.codeTitle = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][1]
+										vm.$forceUpdate()
 									}
 								}
 							})
@@ -77,6 +78,7 @@
 								if (JSON.parse(localStorage.getItem('RunJS_dataSource')) && JSON.parse(localStorage.getItem('RunJS_dataSource')).hasOwnProperty(param.get("codeID"))) {
 									this.code = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][0]
 									this.codeTitle = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][1]
+									vm.$forceUpdate()
 								}
 							}
 						}
