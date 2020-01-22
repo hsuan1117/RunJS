@@ -20,7 +20,7 @@
 			<h1 class="text text-primary">執行 Javascript</h1>
 			<h5 class="text text-dark">{{codeTitle}}</h5>
 			<hr>
-			<pre onclick="$('#code').show();$('#LineBreak_ajdl235').show();$(this).hide();"><code class="language-javascript" :text="code"></code></pre>
+			<pre onclick="$('#code').show();$('#LineBreak_ajdl235').show();$(this).hide();"><code class="language-javascript" v-text="code"></code></pre>
 			<textarea id="code" style="display:none;" class="form-control" placeholder="Javascript代碼" class="language-javascript"
 			 v-model="code">{{code}}</textarea>
 			<br id="LineBreak_ajdl235" style="display: none;">
