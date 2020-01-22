@@ -8,6 +8,10 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 		 crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+			/* Config */
+			const CDN_URL = "https://cdn.jsdelivr.net/gh/hsuan1117/RunJS@master/"
+		</script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/styles/github.min.css">
 		<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build/highlight.min.js"></script>
 	</head>
@@ -51,11 +55,36 @@
 			hljs.initHighlightingOnLoad()
 		</script>
 		<script>
+			let param = new URLSearchParams(window.location.search.substr(1))
 			var vm = new Vue({
 				el: "#app",
+				created: function() {
+					let dataVersion = Number(localStorage.getItem('RunJS_dataVersion')) || 0;
+					fetch(CDN_URL+"dataVersion.txt").then(function(res){return res.text}).then((val) => {
+						if (Number(val) > dataVersion) {
+							localStorage.setItem('RunJS_dataVersion',Number(val))
+							fetch(CDN_URL + "data.json").then(function(res){return res.json()}).then(function(json) {
+								localStorage.setItem('RunJS_dataSource', JSON.stringify(json))
+								if (param.has("codeID")) {
+									if (JSON.parse(localStorage.getItem('RunJS_dataSource')).hasOwnProperty(param.get("codeID"))) {
+										this.code = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][0]
+										this.codeTitle = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][1]
+									}
+								}
+							})
+						} else {
+							if (param.has("codeID")) {
+								if (JSON.parse(localStorage.getItem('RunJS_dataSource')).hasOwnProperty(param.get("codeID"))) {
+									this.code = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][0]
+									this.codeTitle = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][1]
+								}
+							}
+						}
+					})
+				},
 				data: (function() {
 					return {
-						"code": `console.log(1)`,
+						"code": ``,
 						"codeTitle": "",
 						"consoleMessage": []
 					}
