@@ -67,16 +67,16 @@
 								localStorage.setItem('RunJS_dataSource', JSON.stringify(json))
 								if (param.has("codeID")) {
 									if (JSON.parse(localStorage.getItem('RunJS_dataSource')) && JSON.parse(localStorage.getItem('RunJS_dataSource')).hasOwnProperty(param.get("codeID"))) {
-										this.code = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][0]
-										this.codeTitle = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][1]
+										this.code = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][0]
+										this.codeTitle = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][1]
 									}
 								}
 							})
 						} else {
 							if (param.has("codeID")) {
 								if (JSON.parse(localStorage.getItem('RunJS_dataSource')) && JSON.parse(localStorage.getItem('RunJS_dataSource')).hasOwnProperty(param.get("codeID"))) {
-									this.code = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][0]
-									this.codeTitle = localStorage.getItem('RunJS_dataSource')[param.get("codeID")][1]
+									this.code = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][0]
+									this.codeTitle = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][1]
 								}
 							}
 						}
