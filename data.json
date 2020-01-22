@@ -2,5 +2,9 @@
   "alert":[
     "window.alert(0)",
     "顯示視窗"
+  ],
+  "consoleLog":[
+    "console.log(10)",
+    "輸出到控制台"
   ]
 }
