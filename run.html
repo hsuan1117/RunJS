@@ -70,6 +70,7 @@
 										this.code = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][0]
 										this.codeTitle = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][1]
 										vm.$forceUpdate()
+										hljs.highlightBlock(document.querySelector(".language-javascript"))
 									}
 								}
 							})
@@ -79,6 +80,7 @@
 									this.code = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][0]
 									this.codeTitle = JSON.parse(localStorage.getItem('RunJS_dataSource'))[param.get("codeID")][1]
 									vm.$forceUpdate()
+									hljs.highlightBlock(document.querySelector(".language-javascript"))
 								}
 							}
 						}
